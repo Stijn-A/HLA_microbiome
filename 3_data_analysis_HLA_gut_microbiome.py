@@ -9,7 +9,7 @@ s.p.andeweg@students.uu.nl
 
 
 This script contains six parts:
-(1) reading all the BAM files into python and saving them using json (line 60)
+(1) reading all the BAM files into python (line 60)
 (2) select the datasets on the HLA class I or II profile  (line 191)
 (3) extract bacterial reads and filter datasets (line 1258)
 (4) calculate the alpha diversity (line 1395)
