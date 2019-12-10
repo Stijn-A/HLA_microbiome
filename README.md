@@ -1,7 +1,7 @@
 # Quantifying_the_impact_of_Human_Leukocyte_Antigen_on_the_human_gut_microbiome
 Data analysis and figures for 'Quantifying the impact of Human Leukocyte Antigen on the human gut microbiome
 
-   1_downloading_from_SRA.sh code for downloading the datasets from SRA
+   1_downloading_from_SRA.sh code for downloading datasets from SRA
 
    2_mapping_pipeline.sh code for mapping the datasets to our composed reference database
 
