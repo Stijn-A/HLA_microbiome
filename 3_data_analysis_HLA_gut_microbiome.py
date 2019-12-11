@@ -1368,7 +1368,6 @@ def importPrimaryAcc2Genus(file_location):
             if genus[-1].isdigit() and genus[-2] == ' ':
                 genus = genus[:-2]
             genus = genus.replace(' ', '_')
-            #print(PrimaryAcc, length_path, genus)
             silvaPrimaryAcc2Genus[PrimaryAcc] = genus
     return silvaPrimaryAcc2Genus
 file_location = "/home/stijn/stijn2/9_python_files/silva_taxonomy/taxmap_slv_ssu_ref_132-corrected.txt"
@@ -2263,7 +2262,6 @@ supertypes_profile_list = {} #fix HLA-C
 for k, v in HLA_profile_c1.items():
     supertypes_profile_list[k] = []
     for k2, v2 in v.items():
-        #print(k2)
         if k2.startswith(('HLA-A', 'HLA-B')):
             hla = v2[0][0]
             hla = hla[4::]
