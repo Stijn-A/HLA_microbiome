@@ -9,7 +9,7 @@ s.p.andeweg@students.uu.nl
 
 
 This script contains six parts:
-(1) reading all the BAM files into python and saving them using json (line 60)
+(1) reading all the BAM files into python (line 60)
 (2) select the datasets on the HLA class I or II profile  (line 191)
 (3) extract bacterial reads and filter datasets (line 1258)
 (4) calculate the alpha diversity (line 1395)
@@ -1368,7 +1368,6 @@ def importPrimaryAcc2Genus(file_location):
             if genus[-1].isdigit() and genus[-2] == ' ':
                 genus = genus[:-2]
             genus = genus.replace(' ', '_')
-            #print(PrimaryAcc, length_path, genus)
             silvaPrimaryAcc2Genus[PrimaryAcc] = genus
     return silvaPrimaryAcc2Genus
 file_location = "/home/stijn/stijn2/9_python_files/silva_taxonomy/taxmap_slv_ssu_ref_132-corrected.txt"
@@ -2263,7 +2262,6 @@ supertypes_profile_list = {} #fix HLA-C
 for k, v in HLA_profile_c1.items():
     supertypes_profile_list[k] = []
     for k2, v2 in v.items():
-        #print(k2)
         if k2.startswith(('HLA-A', 'HLA-B')):
             hla = v2[0][0]
             hla = hla[4::]
