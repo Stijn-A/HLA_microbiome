@@ -38,7 +38,7 @@ For loading and saving of files my local directories are used.
 Change /home/stijn/otherdirectories/ to own directories for reproducability.
 
 """
-
+# %% import packages
 import json
 import subprocess
 from itertools import chain
@@ -61,7 +61,7 @@ from itertools import product
 from itertools import combinations
 
 '''
-part (1) reading all the BAM files into python and saving them using json
+# %% part (1) reading all the BAM files into python and saving them using json
 
 
 
@@ -191,11 +191,8 @@ for item in input_list:
                                         #dict[SRA_acc][reference_genome_location]
                                         #  = number of mapped reads
         
-
-(2) select the datasets on the HLA profile / perform HLA typing
+# %% (2) select the datasets on the HLA profile / perform HLA typing
 '''
-
-
 #This are the BAM files loaded into python of the current study. (Part 1 done)
 with open('/home/stijn/stijn2/9_python_files/all_sample_dict.txt') as f:
     all_sample_dict = json.load(f)
@@ -422,7 +419,7 @@ for k, v in selected_HLARdict_CII_2d.items():
 
 
 '''
-Figures on HLA only Figure 1, Supplement figure 4
+# %% Figures on HLA only Figure 1, Supplement figure 4
 Preparation for NMDP comparison HLA class I
 '''
 
@@ -569,8 +566,7 @@ for i in allele_list_C:
 
 
 '''
-Supplementary Figure 4A-C 'HLA frequencies compared between current study and 
-National Marrow Donor Program (NMDP).'
+# %% Supplementary Figure 4A-C 'HLA frequencies compared between current study and National Marrow Donor Program (NMDP).'
 '''
 
 #plotting HLA-A
@@ -630,7 +626,7 @@ plt.show()
 
 
 '''
-Preparation for NMDP comparison HLA class II Supplementary Figure 4D-E
+# %% Preparation for NMDP comparison HLA class II Supplementary Figure 4D-E
 '''
 
 #calculating allele counts current study
@@ -749,8 +745,7 @@ for i in allele_list_DRB1:
 
 
 '''
-Supplementary Figure 4D-E 'HLA frequencies compared between current study and 
-National Marrow Donor Program (NMDP).'
+# %% Supplementary Figure 4D-E 'HLA frequencies compared between current study and National Marrow Donor Program (NMDP).'
 '''
 
 
@@ -795,7 +790,7 @@ plt.show()
 
 
 '''
-Data preparation Figure 1B and Supplementary Figure 4F
+# %% Data preparation Figure 1B and Supplementary Figure 4F
 '''
 
 #classify the genes as homozygote, hetorozygote or one-allele known
@@ -996,8 +991,7 @@ df_ABC_DR_DQ_DP_NMDP = df_A_NMDP.append(df_B_NMDP, ignore_index=True)\
     .append(df_DQB1_NMDP, ignore_index=True)
 
 '''
-Supplementary Figure 4F 'HLA frequencies compared between current study and 
-National Marrow Donor Program (NMDP).'
+# %% Supplementary Figure 4F 'HLA frequencies compared between current study and National Marrow Donor Program (NMDP).'
 '''
 
 plt.figure(figsize=(10,8), dpi=100)
@@ -1022,8 +1016,7 @@ plt.savefig('/home/stijn/figures/figures_03_12_19_svg/HLA_hzhz_freq_NMDP.svg')
 plt.show()
 
 '''
-Figure 1B 'Overview of the dataset content per group selected on having a 
-complete profile for the HLA class I or II genes.'
+# %%Figure 1B 'Overview of the dataset content per group selected on having a complete profile for the HLA class I or II genes.'
 '''
 df_c2 = df_A.append(df_B, ignore_index=True).append(df_C, ignore_index=True)\
 .append(df_DRB1, ignore_index=True).append(df_DQB1, ignore_index=True)\
@@ -1049,8 +1042,7 @@ plt.savefig('/home/stijn/figures/figures_03_12_19_svg/HLA_c1_c2_htrz_mhzgt_freq.
 plt.show()
 
 '''
-Data preperation for Figure 1A 'Overview of the dataset content per group 
-selected on having a complete profile for the HLA class I or II genes.'
+# %% Data preperation for Figure 1A 'Overview of the dataset content per group selected on having a complete profile for the HLA class I or II genes.'
 '''
 
 reads_HLA_A = []
@@ -1113,8 +1105,7 @@ for k, v in HLA_profile_c2.items():
                     nr_DQB1_genes += 1
             reads_HLA_DQB1.append(reads_DQB1)
 '''
-Figure 1A 'Overview of the dataset content per group selected on having a 
-complete profile for the HLA class I or II genes.'
+# %% Figure 1A 'Overview of the dataset content per group selected on having a complete profile for the HLA class I or II genes.'
 '''
 plt.figure(figsize=(10,8))
 ax1 = plt.subplot(2, 2, 1)
@@ -1186,7 +1177,7 @@ plt.show()
 
 
 '''
-Data preparation for Supplementary Figure 3
+# %% Data preparation for Supplementary Figure 3
 '''
 
 
@@ -1245,7 +1236,7 @@ number_of_samples = [samples_more_0, samples_more_1, samples_more_50, samples_mo
                      samples_more_300, samples_more_350, samples_more_400, \
                      samples_more_450]
 '''
-Supplementary Figure 3 'Reads mapping to HLA genes in all samples'
+# %% Supplementary Figure 3 'Reads mapping to HLA genes in all samples'
 '''
 
 
@@ -1259,7 +1250,7 @@ plt.show()
 
 
 '''
-(3) Microbiome preparation; extract bacterial reads and filter datasets
+# %% (3) Microbiome preparation; extract bacterial reads and filter datasets
 ''' 
 
 
@@ -1396,7 +1387,7 @@ bact_only_dd_selected_genus = Acc_translated_to_genus_dict(bact_only_dd_selected
 
 
 '''
-part (4) Alpha/within Sample diversity compared to zygosity analysis 
+# %% part (4) Alpha/within Sample diversity compared to zygosity analysis 
 '''
 
 #zygote_mhc_profile_c1 was produced earlier
@@ -1542,8 +1533,7 @@ def annotate_heatmap(im, data=None, valfmt="{x:.2f}",
 
     return texts
 '''
-Figure 2A 'The influence of HLA zygosity on gut microbiome alpha diversity.'
-Supplementary Figure 5A
+# %% Figure 2A 'The influence of HLA zygosity on gut microbiome alpha diversity. Supplementary Figure 5A
 '''
 
 
@@ -1604,7 +1594,7 @@ plt.savefig('/home/stijn/figures/figures_03_12_19_svg/alpha_htzgt_genes_c1.svg')
 plt.show()
 
 '''
-Figure 2B 'The influence of HLA zygosity on gut microbiome alpha diversity.'
+# %% Figure 2B 'The influence of HLA zygosity on gut microbiome alpha diversity.'
 '''
 
 
@@ -1633,7 +1623,7 @@ plt.show()
 
 
 '''
-Supplementary Figure 5B 'The influence of HLA zygosity on gut microbiome alpha diversity.'
+# %% Supplementary Figure 5B 'The influence of HLA zygosity on gut microbiome alpha diversity.'
 '''
 
 
@@ -1649,7 +1639,7 @@ plt.show()
 
 
 '''
-Data processing Figure 3 and Supplementary Figure 6C
+# %% Data processing Figure 3 and Supplementary Figure 6C
 '''
 
 #check differance per homozygotic gene
@@ -1688,7 +1678,7 @@ C = df.HLA_gene.apply(lambda x: 'HLA-C' in x)
 df3 = df[C]
 
 '''
-Figure 3 and Supplementary Figure 6C
+# %% Figure 3 and Supplementary Figure 6C
 '''
 plt.figure(figsize=(10,8), dpi=100)
 plt.subplot(211)
@@ -1740,7 +1730,7 @@ stats.ks_2samp(df1['Evenness'],df3['Evenness'])
 stats.ks_2samp(df1['Richness'],df3['Richness'])
 
 '''
-Data processing Supplementary Figure 5 and Figure 2C
+# %% Data processing Supplementary Figure 5 and Figure 2C
 '''
 
     
@@ -1796,7 +1786,7 @@ df3 = df[df['heterogenes'] == 'hetero- \nzygote\n gene(s) 3']
 #dfs1 = pd.melt(df, id_vars = 'HLA_gene')
 
 '''
-Supplementary Figure 5C 'Alpha diversity over hetero- & homozygotic HLA class II genes.'
+# %% Supplementary Figure 5C 'Alpha diversity over hetero- & homozygotic HLA class II genes.'
 Figure 2C
 '''
 
@@ -1843,7 +1833,7 @@ plt.savefig('/home/stijn/figures/figures_03_12_19_svg/alpha_htzgt_genes_c2.svg')
 plt.show()
 
 '''
-Figure 2D and Supplementary Figure 5D
+# %% Figure 2D and Supplementary Figure 5D
 '''
 list_df_B = [df0, df1, df2, df3]
 Richness_P = []
@@ -1881,7 +1871,7 @@ plt.savefig('/home/stijn/figures/figures_03_12_19_svg/heatmapKS_c2_evenness.svg'
 plt.show()
 
 '''
-Supplementary Figure 6A-B
+# %% Supplementary Figure 6A-B
 '''
 
 #check differance per homozygotic gene class II
@@ -1920,7 +1910,7 @@ df3 = df[DQB1]
 
 
 '''
-Supplementary Figure 6A-B 'Effect of homozygous HLA genes on the alpha diversity of the microbiome'
+# %% Supplementary Figure 6A-B 'Effect of homozygous HLA genes on the alpha diversity of the microbiome'
 '''
 
 plt.figure(figsize=(10,8), dpi=100)
@@ -1972,7 +1962,7 @@ plt.show()
 
 
 '''
-part (5) Beta diversity/between sample diversity 
+# %% part (5) Beta diversity/between sample diversity 
 Functions for beta diversity
 '''
 
@@ -2135,7 +2125,7 @@ df5 = df[df['matching_alleles'] == 5]
 df6 = df[df['matching_alleles'] == 6]
 
 '''
-Supplementary Figure 7A 'Microbiome beta diversity for samples with shared HLA class I alleles.'
+# %% Supplementary Figure 7A 'Microbiome beta diversity for samples with shared HLA class I alleles.'
 '''
 #SpearmanR figure
 
@@ -2173,7 +2163,7 @@ plt.savefig('/home/stijn/figures/figures_03_12_19_svg/alleles_shared_beta_div_sp
 plt.show()
 
 '''
-Supplementary Figure 7B 'Microbiome beta diversity for samples with shared HLA class I alleles.'
+# %% Supplementary Figure 7B 'Microbiome beta diversity for samples with shared HLA class I alleles.'
 
 '''
 list_df_C = [df0, df1, df2, df3, df4, df5]
@@ -2197,7 +2187,7 @@ plt.savefig('/home/stijn/figures/figures_03_12_19_svg/heatmapKS_c1_sharedalles_s
 plt.show()
 
 '''
-Supplementary Figure 7C 'Microbiome beta diversity for samples with shared HLA class I alleles.'
+# %% Supplementary Figure 7C 'Microbiome beta diversity for samples with shared HLA class I alleles.'
 '''
 
 plt.figure(figsize=(10,8), dpi=100)
@@ -2234,7 +2224,7 @@ plt.savefig('/home/stijn/figures/figures_03_12_19_svg/alleles_shared_beta_div_we
 plt.show()
 
 '''
-Supplementary Figure 7D 'Microbiome beta diversity for samples with shared HLA class I alleles.'
+# %% Supplementary Figure 7D 'Microbiome beta diversity for samples with shared HLA class I alleles.'
 '''
 
 list_df_C = [df0, df1, df2, df3, df4, df5]
@@ -2258,7 +2248,7 @@ plt.savefig('/home/stijn/figures/figures_03_12_19_svg/heatmapKS_c1_sharedalles_w
 plt.show()
 
 '''
-Data processing for Supplementary Figure 8 Supertypes.
+# %% Data processing for Supplementary Figure 8 Supertypes.
 '''
 
 #allele to supertypes translation
@@ -2324,7 +2314,7 @@ df3 = df[df['matching_supertypes'] == 3]
 df4 = df[df['matching_supertypes'] == 4]
 
 '''
-Supplementary Figure 8A
+# %% Supplementary Figure 8A
 '''
 #spearmanR
 plt.figure(figsize=(10,8), dpi=100)
@@ -2355,7 +2345,7 @@ plt.savefig('/home/stijn/figures/figures_03_12_19_svg/supertypes_spearman_c1.svg
 plt.show()
 
 '''
-Supplementary Figure 8B
+# %% Supplementary Figure 8B
 '''
 list_df_D = [df0, df1, df2, df3, df4]
 Spearman_P = []
@@ -2378,7 +2368,7 @@ plt.show()
 
 '''
 part (6) PPSS
-Data processing for PPSS
+# %% Data processing for PPSS
 '''
 
 #lists of alleles found in the dataset and used to predict peptide affinity to.
@@ -2527,8 +2517,7 @@ df = pd.DataFrame.from_dict(data_jaccard)
 
 
 '''
-Figure 4A 'Individuals presenting similar microbial human gut peptides on their 
-HLA have a more similar microbiome'
+# %% Figure 4A 'Individuals presenting similar microbial human gut peptides on their HLA have a more similar microbiome'
 '''
 
 df1 = df[df['jaccard'] < 4]
@@ -2565,8 +2554,7 @@ plt.savefig('/home/stijn/figures/figures_03_12_19_svg/peptidome_jaccard_spearman
 plt.show()
 
 '''
-Figure 4B 'Individuals presenting similar microbial human gut peptides on their 
-HLA have a more similar microbiome'
+# %% Figure 4B 'Individuals presenting similar microbial human gut peptides on their HLA have a more similar microbiome'
 '''
 list_df_E = [df1, df2, df3, df4]
 Spearman_P = []
@@ -2588,8 +2576,7 @@ plt.savefig('/home/stijn/figures/figures_03_12_19_svg/heatmapKS_c1_jaccard_spear
 plt.show()
 
 '''
-Figure 4C 'Individuals presenting similar microbial human gut peptides on their 
-HLA have a more similar microbiome'
+# %% Figure 4C 'Individuals presenting similar microbial human gut peptides on their HLA have a more similar microbiome'
 '''
 #weighted UniFrac
 plt.figure(figsize=(10,8), dpi=100)
@@ -2619,8 +2606,7 @@ plt.show()
 
 
 '''
-Figure 4D 'Individuals presenting similar microbial human gut peptides on their 
-HLA have a more similar microbiome'
+# %% Figure 4D 'Individuals presenting similar microbial human gut peptides on their HLA have a more similar microbiome'
 '''
 
 list_df_F = [df1, df2, df3, df4]
@@ -2643,7 +2629,7 @@ plt.savefig('/home/stijn/figures/figures_03_12_19_svg/heatmapKS_c1_jaccard_wUniF
 plt.show()
 
 '''
-Supplementary Figure 1A Jaccard peptide presentation between alleles. HLA-A
+# %% Supplementary Figure 1A Jaccard peptide presentation between alleles. HLA-A
 '''
 
 # Heatmap ppss scores supplementary figure 7
@@ -2694,7 +2680,7 @@ plt.show()
 
 
 '''
-Supplementary Figure 1B Jaccard peptide presentation between alleles. HLA-B
+# %% Supplementary Figure 1B Jaccard peptide presentation between alleles. HLA-B
 '''
 
 
@@ -2744,7 +2730,7 @@ plt.show()
 
 
 '''
-Supplementary Figure 1C Jaccard peptide presentation between alleles. HLA-C
+# %% Supplementary Figure 1C Jaccard peptide presentation between alleles. HLA-C
 '''
 
 
@@ -2793,7 +2779,7 @@ plt.savefig('/home/stijn/figures/figures_03_12_19_svg/PPSS_colorbar_HLAC.svg')
 plt.show()
 
 '''
-Supplementary Figure 2 Histogram of PPSS pairs of individuals.
+# %% Supplementary Figure 2 Histogram of PPSS pairs of individuals.
 '''
 # Histogram PPSS
 bina = []
@@ -2826,7 +2812,7 @@ plt.show()
 
 
 '''
-Individual statistics in the main text
+# %% Individual statistics in the main text
 
 '''
 #Correlation between richness and 16S libary size for Method statement
