@@ -40,10 +40,7 @@ Change /home/stijn/otherdirectories/ to own directories for reproducability.
 """
 # %% import packages
 import json
-import subprocess
-from itertools import chain
 from operator import itemgetter
-import operator
 import numpy as np
 import sys
 sys.path.append('/home/stijn/.local/lib/python3.5/site-packages')
@@ -2098,58 +2095,6 @@ for k, v in zygote_mhc_profile_c2.items():              #complete_hla_profile us
         if k2 == 'HLA-DRB1' and v2 == 'heterozygote':
             zygote_c2_dict['DRB1_heterozygote'].append((richness, evenness))
 
-[x[0] for x in zygote_c1_dict['A_homozygote']] # get richness of homozygotes for HLA-A
-
-
-# %% Supplementary Figure 6A-B 'Effect of homozygous HLA genes on the alpha diversity of the microbiome'
-
-
-plt.figure(figsize=(10,8), dpi=100)
-plt.subplot(2, 1, 1)
-plt.boxplot(df1['Richness'], positions=np.array([0.5]))
-plt.boxplot(df2['Richness'], positions=np.array([1]))
-plt.boxplot(df3['Richness'], positions=np.array([1.5]))
-significance_bar(0.5,1,85, check_pval(stats.ks_2samp(df1['Richness'],df2['Richness'])[1]))
-significance_bar(0.5,1.5,90, check_pval(stats.ks_2samp(df1['Richness'],df3['Richness'])[1]))
-significance_bar(1,1.5,95, check_pval(stats.ks_2samp(df2['Richness'],df3['Richness'])[1]))
-plt.text(1.7, 83, 'P-value='+ str(stats.ks_2samp(df1['Richness'],df2['Richness'])[1])[0:6])
-plt.text(1.7, 88, 'P-value='+ str(stats.ks_2samp(df1['Richness'],df3['Richness'])[1])[0:6])
-plt.text(1.7, 93, 'P-value='+ str(stats.ks_2samp(df2['Richness'],df3['Richness'])[1])[0:6])
-plt.xlim(0,2)
-plt.ylabel('Richness', fontsize=16)
-#plt.title('Alpha diversity over HLA class II homozygote genes')
-plt.xticks([])
-plt.subplot(2, 1, 2)
-plt.boxplot(df1['Evenness'], positions=np.array([0.5]))
-plt.boxplot(df2['Evenness'], positions=np.array([1]))
-plt.boxplot(df3['Evenness'], positions=np.array([1.5]))
-significance_bar(0.5,1,0.71, check_pval(stats.ks_2samp(df1['Evenness'],df2['Evenness'])[1]))
-significance_bar(0.5,1.5,0.77, check_pval(stats.ks_2samp(df1['Evenness'],df3['Evenness'])[1]))
-significance_bar(1,1.5,0.83, check_pval(stats.ks_2samp(df2['Evenness'],df3['Evenness'])[1]))
-plt.text(1.7, 0.68, 'P-value='+ str(stats.ks_2samp(df1['Evenness'],df2['Evenness'])[1])[0:6])
-plt.text(1.7, 0.74, 'P-value='+ str(stats.ks_2samp(df1['Evenness'],df3['Evenness'])[1])[0:6])
-plt.text(1.7, 0.80, 'P-value='+ str(stats.ks_2samp(df2['Evenness'],df3['Evenness'])[1])[0:6])
-plt.ylabel('Evenness', fontsize=16)
-plt.xlim(0,2)
-ticks = ['HLA-DQB1','HLA-DRB1','HLA-DPB1']
-plt.xticks([0.5, 1, 1.5], ticks, fontsize=16)
-plt.text(0.4, 0.95, 'N='+ str(len(df1)))
-plt.text(0.9, 0.95, 'N='+ str(len(df2)))
-plt.text(1.4, 0.95, 'N='+ str(len(df3)))
-
-plt.subplot(2, 1, 1)
-plt.violinplot(df1['Richness'], positions=np.array([0.5]), showmeans=True)
-plt.violinplot(df2['Richness'], positions=np.array([1]), showmeans=True)
-plt.violinplot(df3['Richness'], positions=np.array([1.5]), showmeans=True)
-plt.xlim(0,2)
-plt.xticks([])
-plt.subplot(2, 1, 2)
-plt.violinplot(df1['Evenness'], positions=np.array([0.5]), showmeans=True)
-plt.violinplot(df2['Evenness'], positions=np.array([1]), showmeans=True)
-plt.violinplot(df3['Evenness'], positions=np.array([1.5]), showmeans=True)
-plt.xlim(0,2)
-plt.savefig(Figure_save + 'alpha_hmzgt_genes_c2.svg')
-plt.show()
 
 # %% New supplement figure 6
 plt.figure(figsize=(10,8), dpi=100)
@@ -2196,12 +2141,12 @@ plt.xlim(0,4.5)
 ticks = ['\nHLA-DQB1','\nHLA-DRB1','\nHLA-DPB1']
 plt.xticks([0.75, 2.25, 3.75], ticks, fontsize=14)
 #plot hetero/homozygote labels
-plt.text(0.28, -0.02, 'homozygote')
-plt.text(0.78, -0.02, 'heterozygote')       
-plt.text(1.78, -0.02, 'homozygote')
-plt.text(2.28, -0.02, 'heterozygote')       
-plt.text(3.28, -0.02, 'homozygote')
-plt.text(3.78, -0.02, 'heterozygote')       
+plt.text(0.28, -0.06, 'homozygote')
+plt.text(0.78, -0.06, 'heterozygote')       
+plt.text(1.78, -0.06, 'homozygote')
+plt.text(2.28, -0.06, 'heterozygote')       
+plt.text(3.28, -0.06, 'homozygote')
+plt.text(3.78, -0.06, 'heterozygote')       
             
          
 plt.text(0.4, 0.8, 'N='+ str(len(zygote_c2_dict['DQB1_homozygote'])))
