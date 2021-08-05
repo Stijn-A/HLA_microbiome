@@ -191,7 +191,7 @@ for item in input_list:
 '''        
 # %% (2) select the datasets on the HLA profile / perform HLA typing
 
-storage_location = '/net/chaperone/linuxhome/stijn/'
+storage_location = '/net/phage/linuxhome/mgx/people/stijn/'
 #This are the BAM files loaded into python of the current study. (Part 1 done)
 with open(storage_location + '9_python_files/all_sample_dict.txt') as f:
     all_sample_dict = json.load(f)
@@ -449,7 +449,7 @@ for k, v in selected_HLARdict_CI_2d.items():    #change 2d or 4d
         highest_HLA = max(HLA_reads, key=itemgetter(1))
         HLA_reads.remove(highest_HLA)
         if len(HLA_reads) > 0:
-            cutoff = v2[highest_HLA[0]] * 0.2
+            cutoff = v2[highest_HLA[0]] * 0.15
             if max(HLA_reads, key=itemgetter(1))[1] >= cutoff:      
                 #second hit of heterozygote need to be 20% of the first hit
                 second_highest_HLA = max(HLA_reads, key=itemgetter(1))
@@ -475,7 +475,7 @@ for k, v in selected_HLARdict_CII_2d.items():
         highest_HLA = max(HLA_reads, key=itemgetter(1))
         HLA_reads.remove(highest_HLA)
         if len(HLA_reads) > 0:
-            cutoff = v2[highest_HLA[0]] * 0.2
+            cutoff = v2[highest_HLA[0]] * 0.15
             if max(HLA_reads, key=itemgetter(1))[1] >= cutoff:      
                 #second hit of heterozygote need to be 20% of the first hit
                 second_highest_HLA = max(HLA_reads, key=itemgetter(1))
@@ -490,8 +490,28 @@ for k, v in selected_HLARdict_CII_2d.items():
                 second_highest_HLA = 'No allele'
         HLA_profile_c2[k][k2] = highest_HLA, second_highest_HLA
 
+Hla = 'HLA-C'
+HLA_profile_c1['SRR8204380'][Hla]
+HLA_profile_c1['SRR8204362'][Hla]
+HLA_profile_c1['SRR8204372'][Hla]
+HLA_profile_c1['SRR8204374'][Hla]
+HLA_profile_c1['SRR8204375'][Hla]
 
+HLA_profile_c1['SRR8204377'][Hla]
+HLA_profile_c1['SRR8204369'][Hla]
+HLA_profile_c1['SRR8204378'][Hla]
+HLA_profile_c1['SRR8204376'][Hla]
 
+HLA_profile_c1['SRR8204365'][Hla]
+HLA_profile_c1['SRR8204347'][Hla]
+HLA_profile_c1['SRR8204348'][Hla]
+HLA_profile_c1['SRR8204358'][Hla]
+
+Cutoff_level = [0.1,0.15,0.2,0.25]
+Fraction_correct = [62/78, 63/78, 62/78, 61/78]
+plt.scatter(Cutoff_level, Fraction_correct)
+plt.plot(Cutoff_level, Fraction_correct)
+plt.show()
 
 #WORK IN PROGRESS
 person_a = ['SRR8204380', 'SRR8204362', 'SRR8204372', 'SRR8204374'] # (C1) SRR8204375 (C2) SRR8204355
@@ -924,7 +944,7 @@ for k, v in zygote_mhc_profile_c1.items():
 #calculate relative zygosity frequency
 #A
 relative_freq_zygosity_A = {}
-totalcounts = counts_zygote_A['homozygote'] +counts_zygote_A['heterozygote']
+totalcounts = counts_zygote_A['homozygote'] + counts_zygote_A['heterozygote']
 relative_freq_zygosity_A['homozygote'] = counts_zygote_A['homozygote']/totalcounts
 relative_freq_zygosity_A['heterozygote'] = counts_zygote_A['heterozygote']/totalcounts
 #B
@@ -956,12 +976,12 @@ df_A_NMDP = pd.DataFrame(list(obs_freq_A.items()), columns = ['zygosity', 'relat
 category_A = ['A\nNMDP', 'A\nNMDP']
 df_A_NMDP['HLA_gene'] = category_A
 
-obs_freq_B = {'homozygote':0.1038, 'heterozygote': 1-0.1038}
+obs_freq_B = {'homozygote':0.0702, 'heterozygote': 1-0.0702}
 df_B_NMDP = pd.DataFrame(list(obs_freq_B.items()), columns = ['zygosity', 'relative_frequency'])
 category_B = ['B\nNMDP', 'B\nNMDP']
 df_B_NMDP['HLA_gene'] = category_B
 
-obs_freq_C = {'homozygote':0.0702, 'heterozygote': 1-0.0702}
+obs_freq_C = {'homozygote':0.1038, 'heterozygote': 1-0.1038}
 df_C_NMDP = pd.DataFrame(list(obs_freq_C.items()), columns = ['zygosity', 'relative_frequency'])
 category_C = ['C\nNMDP', 'C\nNMDP']
 df_C_NMDP['HLA_gene'] = category_C
@@ -1105,8 +1125,8 @@ plt.legend(bbox_to_anchor=(1, 1.05), frameon=False)
 x_pos = [0,1,3,4,6,7,9,10,12,13,15] 
 plt.xticks(x_pos, df_c1_c2.HLA_gene) 
 plt.xlabel("HLA genes")
-plt.ylabel("Population frequency", fontsize=14)
-plt.savefig(Figure_save + 'HLA_hzhz_freq_NMDP.svg')
+plt.ylabel("Population frequency", fontsize=18)
+plt.savefig(Figure_save + 'HLA_hzhz_freq_NMDP.svg', format='svg', bbox_inches='tight')
 plt.show()
 
 
@@ -1643,14 +1663,14 @@ plt.xlim(0,2.4)
 plt.ylabel('Richness', fontsize=16)
 plt.xticks([])
 #significance bars
-significance_bar(0.5,1,85, check_pval(stats.ks_2samp(df0['Richness'],df1['Richness'], alternative='less')[1]))
-plt.text(2.1, 81, 'P='+ str(stats.ks_2samp(df0['Richness'],df1['Richness'], alternative='less')[1])[0:5])
+#significance_bar(0.5,1,85, check_pval(stats.ks_2samp(df0['Richness'],df1['Richness'], alternative='less')[1]))
+#plt.text(2.1, 81, 'P='+ str(stats.ks_2samp(df0['Richness'],df1['Richness'], alternative='less')[1])[0:5])
 
-significance_bar(0.5,1.5,90, check_pval(stats.ks_2samp(df0['Richness'],df2['Richness'], alternative='less')[1]))
-plt.text(2.1, 86, 'P='+ str(stats.ks_2samp(df0['Richness'],df2['Richness'], alternative='less')[1])[0:5])
+#significance_bar(0.5,1.5,90, check_pval(stats.ks_2samp(df0['Richness'],df2['Richness'], alternative='less')[1]))
+#plt.text(2.1, 86, 'P='+ str(stats.ks_2samp(df0['Richness'],df2['Richness'], alternative='less')[1])[0:5])
 
-significance_bar(0.5,2,95, check_pval(stats.ks_2samp(df0['Richness'],df3['Richness'], alternative='less')[1]))
-plt.text(2.1, 91, 'P='+ str(stats.ks_2samp(df0['Richness'],df3['Richness'], alternative='less')[1])[0:5])
+#significance_bar(0.5,2,95, check_pval(stats.ks_2samp(df0['Richness'],df3['Richness'], alternative='less')[1]))
+#plt.text(2.1, 91, 'P='+ str(stats.ks_2samp(df0['Richness'],df3['Richness'], alternative='less')[1])[0:5])
 
 #significance_bar(1,1.5,100, check_pval(stats.ks_2samp(df1['Richness'],df2['Richness'], alternative='less')[1]))
 #plt.text(2.1, 96, 'P='+ str(stats.ks_2samp(df1['Richness'],df2['Richness'], alternative='less')[1])[0:5])
@@ -2158,7 +2178,7 @@ plt.text(3.9, 0.8, 'N='+ str(len(zygote_c2_dict['DPB1_heterozygote'])))
 
 plt.subplot(2, 1, 1)
 violin_A = plt.violinplot([x[0] for x in zygote_c2_dict['DQB1_homozygote']], positions=np.array([0.5]), showmeans=True)
-for pc in violin_A['bodies']:
+for pc in violin_A['bodies']:   
     pc.set_color('C0')
 for partname in ('cbars','cmins','cmaxes','cmeans'):
     vp = violin_A[partname]
@@ -2382,7 +2402,7 @@ UniFrac_c1 = {}
 for i in HLA_profile_c1_pairs:
     UniFrac_distance = calculate_UniFrac(i[0], i[1], bact_restricted_taxid_dict)
     key = i[0] + '-' + i[1]
-    UniFrac_c1[key] = UniFrac_distance
+    UniFrac_c1[key] = 1 - UniFrac_distance
 
 #make a dict with Microbiome Spearman Rank Correlation between each sample pair
 Spearman_c1 = {}
@@ -2491,7 +2511,7 @@ plt.boxplot(df5['weighted_Unifrac'], positions=np.array([3]))
 plt.boxplot(df6['weighted_Unifrac'], positions=np.array([3.5]))
 plt.xlim(0,3.9)
 
-plt.ylabel('weighted UniFrac', fontsize=16)
+plt.ylabel('1 - weighted UniFrac', fontsize=16)
 ticks = ['0 alleles \nshared', '1 allele \nshared', '2 alleles \nshared', '3 alleles \nshared',\
          '4 alleles \nshared','5 alleles \nshared', '6 alleles \nshared']
 plt.xticks([0.5, 1, 1.5, 2, 2.5, 3, 3.5], ticks, fontsize=16)
@@ -2657,6 +2677,57 @@ plt.title('Spearman two sample Kolmogorov-Smirnov\n item x-axis < item y-axis')
 plt.savefig(Figure_save + 'heatmapKS_c1_supertypes_spearmanR.svg')
 plt.show()
 
+# %% Supplementary Figure 5C
+
+#spearmanR
+plt.figure(figsize=(10,8), dpi=100)
+plt.boxplot(df0['weighted_Unifrac'], positions=np.array([0.5]))
+plt.boxplot(df1['weighted_Unifrac'], positions=np.array([1]))
+plt.boxplot(df2['weighted_Unifrac'], positions=np.array([1.5]))
+plt.boxplot(df3['weighted_Unifrac'], positions=np.array([2]))
+plt.boxplot(df4['weighted_Unifrac'], positions=np.array([2.5]))
+#plt.title('HLA-A/B supertypes shared')
+plt.xlim(0,2.9)
+plt.ylabel('1 - weighted_Unifrac')
+ticks = ['0 supertypes \nshared', '1 supertypes \nshared', '2 supertypes \nshared', '3 supertypes \nshared',\
+         '4 supertypes \nshared']
+plt.xticks([0.5, 1, 1.5, 2, 2.5, 3, 3.5], ticks)
+plt.text(0.5, 1.05, 'N='+ str(len(df0)))
+plt.text(1, 1.05, 'N='+ str(len(df1)))
+plt.text(1.5, 1.05, 'N='+ str(len(df2)))
+plt.text(2, 1.05, 'N='+ str(len(df3)))
+plt.text(2.5, 1.05, 'N='+ str(len(df4)))
+
+plt.violinplot(df0['weighted_Unifrac'], positions=np.array([0.5]), showmeans=True)
+plt.violinplot(df1['weighted_Unifrac'], positions=np.array([1]), showmeans=True)
+plt.violinplot(df2['weighted_Unifrac'], positions=np.array([1.5]), showmeans=True)
+plt.violinplot(df3['weighted_Unifrac'], positions=np.array([2]), showmeans=True)
+plt.violinplot(df4['weighted_Unifrac'], positions=np.array([2.5]), showmeans=True)
+plt.xlim(0,2.9)
+plt.savefig(Figure_save + 'supertypes_unifrac_c1.svg')
+plt.show()
+
+
+# %% Supplementary Figure 5D
+
+list_df_D = [df0, df1, df2, df3, df4]
+weighted_Unifrac_P = []
+for i in range(len(list_df_D)):
+    P_values_weighted_Unifrac = []
+    for j in range(len(list_df_D)):
+        P_values_weighted_Unifrac.append(stats.ks_2samp(list_df_D[i]['weighted_Unifrac'],\
+                                       list_df_D[j]['weighted_Unifrac'], alternative='greater')[1])
+    weighted_Unifrac_P.append(P_values_weighted_Unifrac)
+
+fig, ax = plt.subplots()
+im, cbar = heatmap(np.array(weighted_Unifrac_P), ticks, ticks, ax=ax,
+                   cmap="Reds", cbarlabel="P-value")
+texts = annotate_heatmap(im, valfmt="{x:.4f}")
+
+fig.tight_layout()
+plt.title('weighted_Unifrac two sample Kolmogorov-Smirnov\n item x-axis < item y-axis')
+plt.savefig(Figure_save + 'heatmapKS_c1_supertypes_weighted_Unifrac.svg')
+plt.show()
 
 #part (6) PPSS
 # %% Data processing for PPSS
@@ -2877,7 +2948,7 @@ plt.boxplot(df2['weighted_Unifrac'], positions=np.array([1]))
 plt.boxplot(df3['weighted_Unifrac'], positions=np.array([1.5]))
 plt.boxplot(df4['weighted_Unifrac'], positions=np.array([2]))
 plt.xlim(0,2.4)
-plt.ylabel('weighted_Unifrac', fontsize=16)
+plt.ylabel('1 - weighted Unifrac', fontsize=16)
 #plt.violinplot(df0['weighted_Unifrac'], positions=np.array([0.5]), showmeans=True)
 plt.violinplot(df1['weighted_Unifrac'], positions=np.array([0.5]), showmeans=True)
 plt.violinplot(df2['weighted_Unifrac'], positions=np.array([1]), showmeans=True)
@@ -3216,3 +3287,42 @@ for i in list_bam8:
     if i not in full_name:
         rm_bam_txt(path1, i)
 """
+
+# %%
+'''
+Supplement tables 2-3
+
+pd.DataFrame.from_dict({(i): HLA_profile_c1[i][j] 
+                           for i in HLA_profile_c1.keys() 
+                           for j in HLA_profile_c1[i].keys()},
+                       orient='index')
+
+'''
+alpha_dict_c1 = {}
+for k in HLA_profile_c1.keys():
+    richness = alpha.margalef(list(bact_only_dd_selected_genus[k].values()))
+    tmp1 = {}
+    tmp1["richness"] = richness
+    evenness = alpha.heip_e(list(bact_only_dd_selected_genus[k].values()))
+    tmp2 = {}
+    tmp2["evenness"] = evenness
+    alpha_dict_c1[k] = (tmp1,tmp2)
+
+alpha_dict_c2 = {}
+for k in HLA_profile_c2.keys():
+    richness = alpha.margalef(list(bact_only_dd_selected_genus[k].values()))
+    tmp1 = {}
+    tmp1["richness"] = richness
+    evenness = alpha.heip_e(list(bact_only_dd_selected_genus[k].values()))
+    tmp2 = {}
+    tmp2["evenness"] = evenness
+    alpha_dict_c2[k] = (tmp1,tmp2)
+    
+pd.DataFrame.from_dict(HLA_profile_c1,orient='index').to_csv(r'/home/stijn/figures/figures_24_07_2020/HLA_profile_c1.csv')
+pd.DataFrame.from_dict(HLA_profile_c2,orient='index').to_csv(r'/home/stijn/figures/figures_24_07_2020/HLA_profile_c2.csv')
+pd.DataFrame.from_dict(zygote_mhc_profile_c1,orient='index').to_csv(r'/home/stijn/figures/figures_24_07_2020/zygote_mhc_profile_c1.csv')
+pd.DataFrame.from_dict(zygote_mhc_profile_c2,orient='index').to_csv(r'/home/stijn/figures/figures_24_07_2020/zygote_mhc_profile_c2.csv')
+pd.DataFrame.from_dict(alpha_dict_c1,orient='index').to_csv(r'/home/stijn/figures/figures_24_07_2020/alpha_dict_c1.csv')
+pd.DataFrame.from_dict(alpha_dict_c2,orient='index').to_csv(r'/home/stijn/figures/figures_24_07_2020/alpha_dict_c2.csv')
+
+df.to_csv(r'/home/stijn/figures/figures_24_07_2020/HLA_profile_c1.csv')
